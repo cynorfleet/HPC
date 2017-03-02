@@ -1,45 +1,31 @@
-//					Christian and Johnny
-//					Serial Matrix Multiplication
-//					Program will multiply 2 square matricies
-//					and return result to a 3rd matrix.
-//					User must set the MATRIX_SIZE variable
-//
 #include <stdlib.h>
 #include <stdio.h>
 
-// specifies the size of square matrix (n x n)
 const int MATRIX_SIZE = 10;
 
-// purpose: initializes an matrix with passed in value.
-// requires: dynamically declared 2d array 
-// returns: matrix via pass by reference
 int matrix_init(int*** matrix, int size, int value)
 {
-//	variables
+
+	int count = 0;
 	int count_x, count_y;
 	int** temp_matrix;
 
-//	declare dynamic array of pointers
 	temp_matrix = malloc(size * sizeof(int*));
-//	itterate through rows and init with columns
 	for (int count_x = 0; count_x < size; count_x++)
 	{
-//		declare column array here
 		temp_matrix[count_x] = malloc(size * sizeof(int));
-//		sets element values
 		for (int count_y = 0; count_y < size; count_y++)
 		{
-				temp_matrix[count_x][count_y] = value;
+			if(value !=0)
+				temp_matrix[count_x][count_y] = count++;
+			else
+				temp_matrix[count_x][count_y] = 0;
 		}
 	}
-//	matrix via pass by refrence
 	*matrix = temp_matrix;
 }
 
-
-// purpose: prints the matrix to screen 
-// requires: populated matrix 
-void matrix_print(int **matrix)
+void matrix_debug(int **matrix)
 {
 	int count_x, count_y;
 	for (count_x = 0; count_x <  MATRIX_SIZE; count_x++)
@@ -51,9 +37,6 @@ void matrix_print(int **matrix)
 	printf("\n");
 }
 
-
-// purpose: deletes the 2d Array
-// requires: populated matrix 
 void matrix_free(int **matrix, int row_size)
 {
 	int count_x;
@@ -64,9 +47,13 @@ void matrix_free(int **matrix, int row_size)
     	free(matrix);
 }
 
-// purpose: multiplies Matrix A row by Matrix B column
-// requires: populated matrix 
-// returns: matrix via pass by reference
+int vector_math(int **vector_A, int **vector_B, int size)
+{
+	int result = 0;
+	
+	return result;
+}
+
 void matrix_multi(int **matrix_A, int **matrix_B, int ***result, int size)
 {
 	int count_x, count_y, count_z;
@@ -85,8 +72,6 @@ void matrix_multi(int **matrix_A, int **matrix_B, int ***result, int size)
 	*result = temp_matrix;
 }
 
-// purpose: deletes the 2d Array
-// requires: populated matrix 
 int main ()
 {
 	int rank, size;
@@ -98,11 +83,11 @@ int main ()
 	matrix_multi(matrix_A, matrix_B, &result, MATRIX_SIZE);
 
 	printf("\nMatrix A:");
-	matrix_print(matrix_A);
+	matrix_debug(matrix_A);
 	printf("\nMatrix B:");
-	matrix_print(matrix_B);
+	matrix_debug(matrix_B);
 	printf("\nResult:");
-	matrix_print(result);
+	matrix_debug(result);
 
 	matrix_free(matrix_A, MATRIX_SIZE);
 	matrix_free(matrix_B, MATRIX_SIZE);
