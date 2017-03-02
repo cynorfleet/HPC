@@ -8,7 +8,7 @@
 #include <stdio.h>
 
 // specifies the size of square matrix (n x n)
-const int MATRIX_SIZE = 10;
+const int MATRIX_SIZE = 3;
 
 // purpose: initializes an matrix with passed in value.
 // requires: dynamically declared 2d array 
@@ -85,15 +85,14 @@ void matrix_multi(int **matrix_A, int **matrix_B, int ***result, int size)
 	*result = temp_matrix;
 }
 
-// purpose: deletes the 2d Array
-// requires: populated matrix 
+// MAIN //
 int main ()
 {
 	int rank, size;
 	int **matrix_A, **matrix_B, **result;
 	
 	matrix_init(&matrix_A, MATRIX_SIZE, 1);
-	matrix_init(&matrix_B, MATRIX_SIZE, 1);
+	matrix_init(&matrix_B, MATRIX_SIZE, 2);
 
 	matrix_multi(matrix_A, matrix_B, &result, MATRIX_SIZE);
 
