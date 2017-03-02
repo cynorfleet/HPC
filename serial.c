@@ -1,8 +1,8 @@
-//					Christian and Johnny
-//					Serial Matrix Multiplication
-//					Program will multiply 2 square matricies
-//					and return result to a 3rd matrix.
-//					User must set the MATRIX_SIZE variable
+//			Christian and Johnny
+//		Serial Matrix Multiplication
+//		Program will multiply 2 square matricies
+//		and return result to a 3rd matrix.
+//		User must set the MATRIX_SIZE variable
 //
 #include <stdlib.h>
 #include <stdio.h>
