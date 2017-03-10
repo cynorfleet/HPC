@@ -6,16 +6,15 @@
 //
 #include <stdlib.h>
 #include <stdio.h>
-#include <timer.h>
+#include </usr/include/mpi/mpi.h>
 
 // specifies the size of square matrix (n x n)
-const int MATRIX_SIZE = 640;
-double start, finish;
+const int MATRIX_SIZE = 3;
 
 // purpose: initializes an matrix with passed in value.
-// requires: dynamically declared 2d array 
+// requires: dynamically declared 2d array
 // returns: matrix via pass by reference
-int matrix_init(int*** matrix, int size, int value)
+void matrix_init(int*** matrix, int size, int value)
 {
 //	variables
 	int count_x, count_y;
@@ -39,24 +38,23 @@ int matrix_init(int*** matrix, int size, int value)
 }
 
 
-// purpose: prints the matrix to screen 
-// requires: populated matrix 
+// purpose: prints the matrix to screen
+// requires: populated matrix
 void matrix_print(int **matrix)
 {
-	FILE *outfile;
-	outfile = fopen("./OverwatchSerialOutput.txt", "w");
 	int count_x, count_y;
 	for (count_x = 0; count_x <  MATRIX_SIZE; count_x++)
 	{
+		printf("\nrow %d: ", count_x);
 		for (count_y = 0; count_y < MATRIX_SIZE; count_y++)
-			fprintf(outfile, "%d ", matrix[count_x][count_y]);
-		fprintf(outfile, "\n");
+			printf(" %d ", matrix[count_x][count_y]);
 	}
+	printf("\n");
 }
 
 
 // purpose: deletes the 2d Array
-// requires: populated matrix 
+// requires: populated matrix
 void matrix_free(int **matrix, int row_size)
 {
 	int count_x;
@@ -68,16 +66,16 @@ void matrix_free(int **matrix, int row_size)
 }
 
 // purpose: multiplies Matrix A row by Matrix B column
-// requires: populated matrix 
+// requires: populated matrix
 // returns: matrix via pass by reference
-void matrix_multi(int **matrix_A, int **matrix_B, int ***result, int size)
+void matrix_multi(int **matrix_A, int **matrix_B, int ***result, int size, int begin, int end)
 {
 	int count_x, count_y, count_z;
 	int **temp_matrix;
 
 	matrix_init(&temp_matrix, MATRIX_SIZE, 0);
 
-	for(count_x = 0; count_x < size; count_x++)
+	for(count_x = begin; count_x < end; count_x++)
 	{
 		for(count_y = 0; count_y < size; count_y++)
 		{
@@ -89,24 +87,49 @@ void matrix_multi(int **matrix_A, int **matrix_B, int ***result, int size)
 }
 
 // MAIN //
-int main ()
+int main (int argc, char *argv[])
 {
-	GET_TIME(start);
+
+	int rank, size, start, finish;
+	int sz_total = MATRIX_SIZE * MATRIX_SIZE;
+
+	MPI_INT(&argc, &argv);
+	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+	MPI_Comm_size(MPI_COMM_WORLD, &size);
+
 	int **matrix_A, **matrix_B, **result;
-	
-	matrix_init(&matrix_A, MATRIX_SIZE, 1);
-	matrix_init(&matrix_B, MATRIX_SIZE, 2);
 
-	matrix_multi(matrix_A, matrix_B, &result, MATRIX_SIZE);
+	start = rank * MATRIX_SIZE / size;
+	finish = (rank+1) * MATRIX_SIZE / size;
 
-	matrix_print(result);
+  if(rank == 0){
+		matrix_init(&matrix_A, MATRIX_SIZE, 1);
+		matrix_init(&matrix_B, MATRIX_SIZE, 2);
+  }
+
+	MPI_Bcast(matrix_B, sz_total, MPI_INT, 0 MPI_COMM_WORLD);
+	MPI_Scatter(matrix_A, sz_total/size, MPI_INT, matrix_A[start], sz_total/size, MPI_INT, 0 MPI_COMM_WORLD);
+
+
+	matrix_multi(matrix_A, matrix_B, &result, MATRIX_SIZE, start, finish);
+	MPI_Gather(result[start], sz_total/size, MPI_INT, result, sz_total/size, MPI_INT, 0, MPI_COMM_WORLD);
+
+	if (rank == 0){
+		printf("\nMatrix A:");
+		matrix_print(matrix_A);
+		printf("\nMatrix B:");
+		matrix_print(matrix_B);
+		printf("\nResult:");
+		matrix_print(result);
+	}
 
 	matrix_free(matrix_A, MATRIX_SIZE);
 	matrix_free(matrix_B, MATRIX_SIZE);
 	matrix_free(result, MATRIX_SIZE);
 
-	GET_TIME(finish);
-	printf("\nruntime: %f", finish - start);
+	MPI_Finalize();
+
+	printf("\nDONE!");
 
 	return 0;
 }
