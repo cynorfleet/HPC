@@ -1,5 +1,5 @@
 //			Christian and Johnny
-//		Serial Matrix Multiplication
+//		Parallel Matrix Multiplication
 //		Program will multiply 2 square matricies
 //		and return result to a 3rd matrix.
 //		User must set the MATRIX_SIZE variable
@@ -13,8 +13,8 @@ const int MATRIX_SIZE = 640;
 const int NUM_PROCESSES = 16;
 double start, finish;
 
-// purpose: prints the matrix to outfile 
-// requires: populated matrix 
+// purpose: prints the matrix to outfile
+// requires: populated matrix
 void matrix_print(int *matrix)
 {
 	int i, z;
@@ -29,8 +29,8 @@ void matrix_print(int *matrix)
 	fclose(outfile);
 }
 
-// purpose: initializes a 1D matrix (array) and populates it with specified value 
-// requires: populated matrix 
+// purpose: initializes a 1D matrix (array) and populates it with specified value
+// requires: populated matrix
 void matrix_init1D(int matrix[], int size, int value)
 {
 		int i;
@@ -40,7 +40,7 @@ void matrix_init1D(int matrix[], int size, int value)
 }
 
 // purpose: multiplies two matricies together and stores product in result
-// requires: 3 initialized matrix 
+// requires: 3 initialized matrix
 void mat_Multi(int result[], int matA_local[], int matrix_B[], int size)
 {
 		int x, y, z;
@@ -61,11 +61,11 @@ int main (int argc, char *argv[])
 {
 	// gets the current time
 	GET_TIME(start);
-	// standard MPI vars for processor id and # of processors 
+	// standard MPI vars for processor id and # of processors
 	int rank, size, partition, matSize;
 	// specifies the size of "matrix" we are working with
 	matSize = MATRIX_SIZE * MATRIX_SIZE;
-	
+
 	// the matrix load between processors
 	int matA_local[matSize/NUM_PROCESSES];
 	// the matrix which we will be multiplying
@@ -77,7 +77,7 @@ int main (int argc, char *argv[])
 
 		// allocates and initializes matrix B with the value 2 thru MATRIX_SIZE x MATRIX_SIZE elements (1Darray)
 		matrix_init1D(matrix_B, MATRIX_SIZE * MATRIX_SIZE, 2);
-		
+
 		// start MPI scope
 		MPI_Init(&argc, &argv);
 		// Gets processor info
@@ -85,7 +85,7 @@ int main (int argc, char *argv[])
 		MPI_Comm_size (MPI_COMM_WORLD, &size);
 		// the amount of work to be done
 		partition = (MATRIX_SIZE * MATRIX_SIZE)/size;
-		
+
 		// initializes the local matix A and the local result matrix
 		matrix_init1D(result, partition, 0);
 		matrix_init1D(matA_local, partition, 1);
@@ -98,7 +98,7 @@ int main (int argc, char *argv[])
 		// master prints the matrix
 		if(rank == 0)
 			matrix_print(combined);
-		
+
 	MPI_Finalize();
 
 	// gets current time and calculates how long program took
