@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
         fprintf(outfile, "\n");
         printf("\n");
     }
-    fprintf(outfile, "\nEnter the source: ");
+    fprintf(outfile, "\nEnter the source: \n");
     printf("\nEnter the source: ");
     scanf("%d", &source);
 
