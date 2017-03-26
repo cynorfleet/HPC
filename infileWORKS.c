@@ -3,28 +3,39 @@
 #include<stdio.h>
 #include<string.h>
 #include<math.h>
+#include<time.h>
 
 #define IN 99
 #define N 6
 
 int dijkstra(int cost[][N], int source, int target);
 void strrev(char str[100]);
-void openFiles(FILE *infile, FILE *outfile);
-
+void header(FILE *outfile);
 int main(int argc, char *argv[])
 {
+    //openFiles
+    FILE *infile, *outfile;
+    infile=fopen("infile.txt", "r");
+    outfile=fopen("outfile.txt", "a");
+    header(outfile);
+
     int node_count = atoi(argv[1]) - 1;
     int edge_count = node_count*(node_count-1)/2;
-    printf("node count: %d edge count: %d\n", node_count, edge_count);
 
     char tempnode[100];
     int node, out_counter=1;
-    FILE *infile, *outfile;
-    openFiles(infile,outfile);
+
 
     int cost[N][N],i,j,w,ch,co;
     int source, target,x,y;
-    printf("\t The Shortest Path Algorithm ( DIJKSTRA'S ALGORITHM in C \n\n");
+    char *msg;
+
+    fprintf(outfile, "\t The Shortest Path Algorithm ( DIJKSTRA'S ALGORITHM in C ) \n\n");
+    fprintf(outfile, "[node count: %d edge count: %d]\n", node_count, edge_count);
+
+    printf("\t The Shortest Path Algorithm ( DIJKSTRA'S ALGORITHM in C ) \n\n");
+    printf("node count: %d edge count: %d\n", node_count, edge_count);
+
     for(i=1;i< N;i++)
     for(j=1;j< N;j++)
     cost[i][j] = edge_count;
@@ -34,11 +45,16 @@ int main(int argc, char *argv[])
         {
             fscanf(infile, "%[^\n]\n", tempnode);
             node = atoi(tempnode);
+
+            fprintf(outfile,"Weight of the path between nodes %d and %d: %d\n",x,y,node);
             printf("Weight of the path between nodes %d and %d: %d\n",x,y,node);
             cost [x][y] = cost[y][x] = node;
         }
+
+        fprintf(outfile, "\n");
         printf("\n");
     }
+    fprintf(outfile, "\nEnter the source: ");
     printf("\nEnter the source: ");
     scanf("%d", &source);
 
@@ -47,6 +63,7 @@ int main(int argc, char *argv[])
         if(out_counter != source)
         {
             co = dijsktra(cost,source,out_counter);
+            fprintf(outfile, "\tThe Shortest Path from %d to %d: %d\n",source,out_counter,co);
             printf("\tThe Shortest Path from %d to %d: %d\n",source,out_counter,co);
         }
     }
@@ -100,11 +117,6 @@ int dijsktra(int cost[][N],int source,int target)
     return dist[target];
 }
 
-void openFiles(FILE *infile, FILE *outfile)
-{
-  infile=fopen("infile.txt", "r");
-  outfile=fopen("outfile.txt", "w");
-}
 void strrev(char str[100])
 {
     char temp;
@@ -121,4 +133,20 @@ void strrev(char str[100])
        i++;
        j--;
     }
+}
+
+void header(FILE *outfile)
+{
+  time_t curtime;
+  struct tm *loc_time;
+
+  //Getting current time of system
+  curtime = time (NULL);
+
+  // Converting current time to local time
+  loc_time = localtime (&curtime);
+
+char *seperator = "--------------------";
+  // Displaying date and time in standard format
+  fprintf(outfile, "\n\n%s %s\n", seperator, asctime (loc_time));
 }
