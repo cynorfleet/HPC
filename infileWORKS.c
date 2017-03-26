@@ -15,26 +15,25 @@ int main(int argc, char *argv[])
 {
     //openFiles
     FILE *infile, *outfile;
+
     infile=fopen("infile.txt", "r");
     outfile=fopen("outfile.txt", "a");
+
     header(outfile);
 
-    int node_count = atoi(argv[1]) - 1;
+    int node_count = atoi(argv[1]);
     int edge_count = node_count*(node_count-1)/2;
 
     char tempnode[100];
     int node, out_counter=1;
 
-
     int cost[N][N],i,j,w,ch,co;
     int source, target,x,y;
     char *msg;
 
-    fprintf(outfile, "\t The Shortest Path Algorithm ( DIJKSTRA'S ALGORITHM in C ) \n\n");
-    fprintf(outfile, "[node count: %d edge count: %d]\n", node_count, edge_count);
+    fprintf(outfile, "\tThe Shortest Path Algorithm ( DIJKSTRA'S ALGORITHM in C ) \n\n");
 
-    printf("\t The Shortest Path Algorithm ( DIJKSTRA'S ALGORITHM in C ) \n\n");
-    printf("node count: %d edge count: %d\n", node_count, edge_count);
+    printf("\tThe Shortest Path Algorithm ( DIJKSTRA'S ALGORITHM in C ) \n\n");
 
     for(i=1;i< N;i++)
     for(j=1;j< N;j++)
@@ -46,19 +45,21 @@ int main(int argc, char *argv[])
             fscanf(infile, "%[^\n]\n", tempnode);
             node = atoi(tempnode);
 
-            fprintf(outfile,"Weight of the path between nodes %d and %d: %d\n",x,y,node);
-            printf("Weight of the path between nodes %d and %d: %d\n",x,y,node);
+            fprintf(outfile,"\tWeight of the path between nodes %d and %d: %d\n",x,y,node);
+            printf("\tWeight of the path between nodes %d and %d: %d\n",x,y,node);
             cost [x][y] = cost[y][x] = node;
         }
 
         fprintf(outfile, "\n");
         printf("\n");
     }
+    fprintf(outfile, "\t[node count: %d edge count: %d]\n", node_count, edge_count);
+    printf("\t[node count: %d edge count: %d]\n", node_count, edge_count);
 
     fscanf(infile,"%[^\n.*:start]\n", tempnode);
     source = atoi(tempnode);
-    fprintf(outfile, "\nSource node: %d\n", source);
-    printf("\nSource node: %d\n", source);
+    fprintf(outfile, "\n\tSource node: %d\n", source);
+    printf("\n\tSource node: %d\n", source);
 
     for( out_counter= source; out_counter <= node_count; out_counter++)
     {
@@ -115,7 +116,7 @@ int dijsktra(int cost[][N],int source,int target)
     }
     path[j]='\0';
     strrev(path);
-    printf("%s", path);
+    printf("\t%s", path);
     return dist[target];
 }
 
