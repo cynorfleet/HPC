@@ -1,0 +1,107 @@
+
+
+-------------------- Sat Mar 25 23:14:46 2017
+
+	 The Shortest Path Algorithm ( DIJKSTRA'S ALGORITHM in C ) 
+
+[node count: 5 edge count: 10]
+Weight of the path between nodes 1 and 2: 3
+Weight of the path between nodes 1 and 3: 2
+Weight of the path between nodes 1 and 4: 99
+Weight of the path between nodes 1 and 5: 99
+
+Weight of the path between nodes 2 and 3: 99
+Weight of the path between nodes 2 and 4: 2
+Weight of the path between nodes 2 and 5: 3
+
+Weight of the path between nodes 3 and 4: 2
+Weight of the path between nodes 3 and 5: 1
+
+Weight of the path between nodes 4 and 5: 99
+
+
+
+Source node: 1
+	The Shortest Path from 1 to 2: 3
+	The Shortest Path from 1 to 3: 2
+	The Shortest Path from 1 to 4: 4
+	The Shortest Path from 1 to 5: 3
+
+
+-------------------- Sat Mar 25 23:14:57 2017
+
+	 The Shortest Path Algorithm ( DIJKSTRA'S ALGORITHM in C ) 
+
+[node count: 5 edge count: 10]
+Weight of the path between nodes 1 and 2: 3
+Weight of the path between nodes 1 and 3: 2
+Weight of the path between nodes 1 and 4: 99
+Weight of the path between nodes 1 and 5: 99
+
+Weight of the path between nodes 2 and 3: 99
+Weight of the path between nodes 2 and 4: 2
+Weight of the path between nodes 2 and 5: 3
+
+Weight of the path between nodes 3 and 4: 2
+Weight of the path between nodes 3 and 5: 1
+
+Weight of the path between nodes 4 and 5: 99
+
+
+
+Source node: 3
+	The Shortest Path from 3 to 4: 2
+	The Shortest Path from 3 to 5: 1
+
+
+-------------------- Sat Mar 25 23:15:53 2017
+
+	 The Shortest Path Algorithm ( DIJKSTRA'S ALGORITHM in C ) 
+
+[node count: 5 edge count: 10]
+Weight of the path between nodes 1 and 2: 3
+Weight of the path between nodes 1 and 3: 2
+Weight of the path between nodes 1 and 4: 99
+Weight of the path between nodes 1 and 5: 99
+
+Weight of the path between nodes 2 and 3: 99
+Weight of the path between nodes 2 and 4: 2
+Weight of the path between nodes 2 and 5: 3
+
+Weight of the path between nodes 3 and 4: 2
+Weight of the path between nodes 3 and 5: 1
+
+Weight of the path between nodes 4 and 5: 99
+
+
+
+Source node: 3
+	The Shortest Path from 3 to 4: 2
+	The Shortest Path from 3 to 5: 1
+
+
+-------------------- Sat Mar 25 23:16:48 2017
+
+	 The Shortest Path Algorithm ( DIJKSTRA'S ALGORITHM in C ) 
+
+[node count: 5 edge count: 10]
+Weight of the path between nodes 1 and 2: 3
+Weight of the path between nodes 1 and 3: 2
+Weight of the path between nodes 1 and 4: 99
+Weight of the path between nodes 1 and 5: 99
+
+Weight of the path between nodes 2 and 3: 99
+Weight of the path between nodes 2 and 4: 2
+Weight of the path between nodes 2 and 5: 3
+
+Weight of the path between nodes 3 and 4: 2
+Weight of the path between nodes 3 and 5: 1
+
+Weight of the path between nodes 4 and 5: 99
+
+
+
+Source node: 2
+	The Shortest Path from 2 to 3: 4
+	The Shortest Path from 2 to 4: 2
+	The Shortest Path from 2 to 5: 3

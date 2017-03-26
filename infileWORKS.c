@@ -54,11 +54,13 @@ int main(int argc, char *argv[])
         fprintf(outfile, "\n");
         printf("\n");
     }
-    fprintf(outfile, "\nEnter the source: \n");
-    printf("\nEnter the source: ");
-    scanf("%d", &source);
 
-    for( out_counter= 1; out_counter <= node_count; out_counter++)
+    fscanf(infile,"%[^\n.*:start]\n", tempnode);
+    source = atoi(tempnode);
+    fprintf(outfile, "\nSource node: %d\n", source);
+    printf("\nSource node: %d\n", source);
+
+    for( out_counter= source; out_counter <= node_count; out_counter++)
     {
         if(out_counter != source)
         {
