@@ -13,7 +13,6 @@
 #include <mpi.h>
 
 #define MASTER 0
-#define N 8
 #define PI 3.14159265
 
 
@@ -21,7 +20,13 @@ int Partition(int numprocessors, int samplesize);
 
 int main(int argc, char **argv)
 {
-  // variables
+  clock_t t1, t2;
+  t1=clock();
+  int N = 0;
+  if(argv[1] == NULL)
+    N=8;
+  else
+    N = atoi(argv[1]);
   double complex sample[N];
   double result[N];
   int numprocessors = 0;
@@ -128,7 +133,7 @@ if (rank == MASTER)
         printf("totalodd: %.1lf + %.1lf\n", creal(totalodd), cimag(totalodd));
       }
 
-   MPI_Gather(sample, partition, MPI_C_DOUBLE_COMPLEX, sample, partition, MPI_C_DOUBLE_COMPLEX, MASTER, MPI_COMM_WORLD);
+   MPI_Gather(init_sample, partition, MPI_C_DOUBLE_COMPLEX, sample, partition, MPI_C_DOUBLE_COMPLEX, MASTER, MPI_COMM_WORLD);
 if(rank == MASTER)
 {
       printf("DONE!!!!\n");
@@ -138,6 +143,9 @@ if(rank == MASTER)
   //fprintf(outfile, "X(%d) = %.1lf\n\n",i, creal(totalresult));
   MPI_Finalize();
   printf("Finished");
+  t2=clock();
+
+  printf("\nRuntime: %ld\n", t2-t1);
   return 0;
 }
 
