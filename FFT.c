@@ -16,6 +16,9 @@
 #define N 8
 #define PI 3.14159265
 
+
+int Partition(int numprocessors, int samplesize);
+
 int main(int argc, char **argv)
 {
   // variables
@@ -134,6 +137,7 @@ if(rank == MASTER)
   }
   //fprintf(outfile, "X(%d) = %.1lf\n\n",i, creal(totalresult));
   MPI_Finalize();
+  printf("Finished");
   return 0;
 }
 
