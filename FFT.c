@@ -44,7 +44,7 @@ int main(int argc, char **argv)
    MPI_Comm_rank(MPI_COMM_WORLD,&rank);
 
    partition = Partition(size, N);
-
+   double complex init_sample[N];
 // initialize values
 if (rank == MASTER)
 {
@@ -53,23 +53,23 @@ if (rank == MASTER)
       //readin from file
        double real, imagine;
        if (fscanf(infile, "%lf %lf\n", &real, &imagine))
-        sample[i] = real + imagine * I;
+        init_sample[i] = real + imagine * I;
        else
         printf("could not read file");
-        
-       fprintf(outfile, "%.1lf %.1fi\n", creal(sample[i]), cimag(sample[i]));
+
+       fprintf(outfile, "%.1lf %.1fi\n", creal(init_sample[i]), cimag(init_sample[i]));
 
   }
     for(i=N+1; i<K; i++)
     {
-       sample[i] = 0 + 0*I;
-       printf("Zero %.1lf %.1fi\n", creal(sample[i]), cimag(sample[i]));
+       init_sample[i] = 0 + 0*I;
+       printf("Zero %.1lf %.1fi\n", creal(init_sample[i]), cimag(init_sample[i]));
     }
 }
   // sync the processes
   MPI_Barrier(MPI_COMM_WORLD);
   // send the data for calculation
-  MPI_Scatter(sample, partition, MPI_C_DOUBLE_COMPLEX, sample, partition, MPI_C_DOUBLE_COMPLEX, MASTER, MPI_COMM_WORLD);
+  MPI_Scatter(init_sample, partition, MPI_C_DOUBLE_COMPLEX, sample, partition, MPI_C_DOUBLE_COMPLEX, MASTER, MPI_COMM_WORLD);
 
     double a1=0;
     double a2=0;
