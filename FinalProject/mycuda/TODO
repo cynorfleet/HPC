@@ -1,0 +1,17 @@
+TODO:
+- graphs & charts
+- code snapshots powerpoint (algorithm)
+- timing c and M_PI
+  - time.h
+    - MPI_Reduce
+    - MPI_Gather
+- hardware specs Turing
+  - 4xTesla k80 GPU
+  - 10x 16core Nodes (16,32,64,128 max)
+- Slides
+  - images
+  - sequential implempt +1
+  - MPI implempt +1
+  - charts
+  -
+  01"- 15 slides

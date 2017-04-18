@@ -1,0 +1,8 @@
+#!/bin/bash
+	#PBS -l walltime=01:00:00
+	#PBS -l nice=10
+	#PBS -l nodes=10:ppn=10
+	#PBS -q default
+
+	# Run your executable
+	mpirun --mca mpi_cuda_support 0 $PBS_O_WORKDIR/ChristianNorfleetHM1x
