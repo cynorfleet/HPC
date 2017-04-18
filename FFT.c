@@ -1,9 +1,18 @@
-//			Christian and Johnny
-//		Serial Matrix Multiplication
-//		Program will multiply 2 square matricies
-//		and return result to a 3rd matrix.
-//		User must set the MATRIX_SIZE variable
-//
+//Assignment #3
+//Name: Kenadi Campbell, and Christian Norfleet
+//Parallel Programming Date: 3/31/2017
+//*****************************************************
+//*****************************************************
+/*In this program, we implemented the radix-2 approach
+of the FFT algorithm. It uses something similar to the
+way you would approach the problem by hand. Splitting
+the data set up into odd and even sections, and then
+find their total's seperately, and then adding them
+together to get the total of the entire set.
+
+Compile: gcc FFT.c -o FFT.exe -lm
+Execute: ./FFT.exe*/
+//*****************************************************/
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
@@ -133,10 +142,10 @@ if (rank == MASTER)
         printf("totalodd: %.1lf + %.1lf\n", creal(totalodd), cimag(totalodd));
       }
 
-   MPI_Gather(init_sample, partition, MPI_C_DOUBLE_COMPLEX, sample, partition, MPI_C_DOUBLE_COMPLEX, MASTER, MPI_COMM_WORLD);
+   MPI_Reduce(sample, init_sample, partition, MPI_C_DOUBLE_COMPLEX, MPI_SUM, MASTER, MPI_COMM_WORLD);
 if(rank == MASTER)
 {
-      printf("DONE!!!!\n");
+    printf("DONE!!!!\n");
     printf("X(%d) = %.1lf + %.1lf\n\n",K, creal(totalresult), cimag(totalresult));
 }
   }
